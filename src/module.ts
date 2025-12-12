@@ -1,19 +1,81 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import type { NuxtOptions } from '@nuxt/schema';
+import {
+    addPlugin,
+    addVitePlugin,
+    createResolver,
+    defineNuxtModule,
+    useLogger,
+} from 'nuxt/kit';
+import { viteWebfontDownload } from 'vite-plugin-webfont-dl';
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
+import type { UserModuleOptions } from './types/options';
 
-export default defineNuxtModule<ModuleOptions>({
-  meta: {
-    name: 'my-module',
-    configKey: 'myModule',
-  },
-  // Default configuration options of the Nuxt module
-  defaults: {},
-  setup(_options, _nuxt) {
-    const resolver = createResolver(import.meta.url)
+export default defineNuxtModule<UserModuleOptions>({
+    // Default configuration options of the Nuxt module
+    defaults: {
+        async: true,
+        enabled: true,
+        subsetsAllowed: [],
+        useOnloadRemoveMediaAttribute: true,
+    },
+    meta: {
+        configKey: 'vitePluginWebfontDl',
+        name: 'nuxt-vite-plugin-webfont-dl',
+    },
+    setup(options, nuxt) {
+        const logger = useLogger();
+        if (!options.enabled) return logger.info('nuxt-vite-plugin-webfont-dl is disabled');
+        const startAt = performance.now();
+        logger.info('Initializing nuxt-vite-plugin-webfont-dl...');
+        const resolver = createResolver(import.meta.url);
 
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
-  },
-})
+        // Install vite plugin
+        addVitePlugin(
+            viteWebfontDownload(
+                options.webfontUrls,
+                {
+                    cache: options.cache,
+                    embedFonts: options.embedFonts,
+                    injectAsStyleTag: false,
+                    minifyCss: options.minifyCss,
+                    proxy: options.proxy,
+                    subsetsAllowed: options.subsetsAllowed,
+                    throwError: options.throwError,
+                },
+            ),
+        );
+
+        // Add link media attribute switcher plugin
+        addPlugin(resolver.resolve('./runtime/plugins/link-media-switcher.client.ts'));
+
+        // Dev mode
+        if (nuxt.options.dev) {
+            const link: NonNullable<NuxtOptions['app']['head']['link']>[number] = {
+                href: '/_nuxt/@webfonts/webfonts.css',
+                id: 'nuxt-vite-plugin-webfont-dl-css-link',
+                rel: 'stylesheet',
+            };
+
+            if (options.async) {
+                link.media = 'print';
+                if (options.useOnloadRemoveMediaAttribute) {
+                    link.onload = `this.onload=null;this.removeAttribute('media');`;
+                }
+            }
+
+            nuxt.options.app.head.link ||= [];
+            nuxt.options.app.head.link.unshift(
+                {
+                    as: 'style',
+                    href: '/_nuxt/@webfonts/webfonts.css',
+                    rel: 'preload',
+                },
+                link,
+            );
+        }
+
+        logger.success(
+            `nuxt-vite-plugin-webfont-dl initialized successfully in ${(performance.now() - startAt).toFixed(2)}ms`,
+        );
+    },
+});

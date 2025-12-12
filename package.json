@@ -1,13 +1,16 @@
 {
   "name": "nuxt-vite-plugin-webfont-dl",
+  "type": "module",
   "version": "0.1.0",
   "description": "Nuxt module.",
+  "author": "kiki-kanri",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kiki-kanri/nuxt-vite-plugin-webfont-dl.git"
   },
-  "license": "MIT",
-  "type": "module",
+  "keywords": [],
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -23,34 +26,65 @@
     }
   },
   "files": [
-    "dist"
+    "./dist"
   ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "prepack": "nuxt-module-build build",
-    "dev": "npm run dev:prepare && nuxi dev playground",
+    "build": "nuxt-module-build build",
+    "bumplog": "changelogen --bump --hideAuthorEmail",
+    "depcheck": "depcheck",
+    "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
-    "lint": "eslint .",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "lint": "eslint --max-warnings 0 && stylelint './**/*.{css,scss,vue}' -i ./.gitignore --mw 0",
+    "lint:fix": "eslint --fix --max-warnings 0 && stylelint './**/*.{css,scss,vue}' -i ./.gitignore --fix --mw 0",
+    "prepack": "pnpm run build",
+    "release": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build && changelogen --hideAuthorEmail --push --release && npm publish",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest watch --coverage",
+    "typecheck": "pnpm run dev:prepare && nuxt typecheck && cd ./playground && nuxt typecheck",
+    "unused-exports": "ts-unused-exports ./tsconfig.json"
+  },
+  "peerDependencies": {
+    "vite-plugin-webfont-dl": "^3.11.1"
+  },
+  "peerDependenciesMeta": {
+    "vite-plugin-webfont-dl": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@nuxt/kit": "^4.2.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.11.0",
+    "@antfu/eslint-config": "^6.6.1",
+    "@kikiutils/eslint-config": "^5.0.0",
+    "@kikiutils/eslint-plugin-tailwindcss": "^3.19.0",
+    "@kikiutils/eslint-plugin-vue": "^10.2.2",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.2.2",
     "@nuxt/test-utils": "^3.21.0",
-    "@types/node": "latest",
+    "@types/node": "^25.0.1",
+    "@vitest/coverage-v8": "^4.0.15",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.1",
+    "depcheck": "^1.4.7",
+    "eslint-plugin-format": "^1.1.0",
+    "eslint-plugin-tailwindcss": "^3.18.2",
     "nuxt": "^4.2.2",
-    "typescript": "~5.9.3",
-    "vitest": "^4.0.15",
-    "vue-tsc": "^3.1.7"
+    "ts-unused-exports": "^11.0.1",
+    "type-fest": "^5.3.1",
+    "typescript": "^5.9.3",
+    "vite-plugin-webfont-dl": "^3.11.1",
+    "vitest": "^4.0.15"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild"
+    ],
+    "overrides": {
+      "tailwindcss": "^3.4.18"
+    }
   }
 }
