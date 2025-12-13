@@ -1,7 +1,7 @@
 {
   "name": "nuxt-vite-plugin-webfont-dl",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt module.",
   "author": "kiki-kanri",
   "license": "MIT",
