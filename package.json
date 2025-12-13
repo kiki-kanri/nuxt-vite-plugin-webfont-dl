@@ -39,14 +39,6 @@
     "typecheck": "pnpm run dev:prepare && nuxt typecheck && cd ./playground && nuxt typecheck",
     "unused-exports": "ts-unused-exports ./tsconfig.json"
   },
-  "peerDependencies": {
-    "vite-plugin-webfont-dl": "^3.11.1"
-  },
-  "peerDependenciesMeta": {
-    "vite-plugin-webfont-dl": {
-      "optional": true
-    }
-  },
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
     "vite-plugin-webfont-dl": "^3.11.1"
