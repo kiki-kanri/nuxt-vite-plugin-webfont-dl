@@ -31,10 +31,10 @@ Add `nuxt-vite-plugin-webfont-dl` to the modules section of your nuxt config.
 
 ```typescript
 export default defineNuxtConfig({
-  modules: ['nuxt-vite-plugin-webfont-dl'],
-  vitePluginWebfontDl: { // Configure
-    webfontUrls: [] // Set urls
-  }
+    modules: ['nuxt-vite-plugin-webfont-dl'],
+    vitePluginWebfontDl: { // Configure
+        webfontUrls: [] // Set urls
+    }
 });
 ```
 
