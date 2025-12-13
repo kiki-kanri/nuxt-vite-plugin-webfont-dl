@@ -22,7 +22,7 @@ Description
 Using [pnpm](https://pnpm.io):
 
 ```bash
-pnpm add -D nuxt-vite-plugin-webfont-dl vite-plugin-webfont-dl
+pnpm add -D nuxt-vite-plugin-webfont-dl
 ```
 
 You can also use `yarn`, `npm`, or `bun`.
