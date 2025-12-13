@@ -2,14 +2,26 @@
   "name": "nuxt-vite-plugin-webfont-dl",
   "type": "module",
   "version": "0.1.1",
-  "description": "Nuxt module.",
+  "description": "A nuxt module to automatically install and configure the vite-plugin-webfont-dl vite plugin.",
   "author": "kiki-kanri",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kiki-kanri/nuxt-vite-plugin-webfont-dl.git"
   },
-  "keywords": [],
+  "keywords": [
+    "css",
+    "font",
+    "font-optimization",
+    "google-fonts",
+    "nuxt",
+    "nuxt-module",
+    "self-hosted-fonts",
+    "vite",
+    "vite-plugin",
+    "webfont",
+    "webfonts"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
