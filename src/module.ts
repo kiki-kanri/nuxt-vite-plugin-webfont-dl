@@ -132,6 +132,7 @@ export default defineNuxtModule<UserModuleOptions>({
         useOnloadMediaSwitch: true,
     },
     meta: {
+        compatibility: { nuxt: '>=3.19.0' },
         configKey: 'vitePluginWebfontDl',
         name: moduleName,
     },
