@@ -67,11 +67,12 @@
     "@types/node": "^25.0.2",
     "@vitest/coverage-v8": "^4.0.15",
     "changelogen": "^0.6.2",
-    "consola": "^3.4.2",
     "depcheck": "^1.4.7",
     "eslint-plugin-format": "^1.1.0",
     "eslint-plugin-tailwindcss": "^3.18.2",
+    "nitropack": "^2.12.9",
     "nuxt": "^4.2.2",
+    "rollup": "^4.53.3",
     "ts-unused-exports": "^11.0.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
