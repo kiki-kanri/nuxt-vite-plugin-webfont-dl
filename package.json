@@ -1,7 +1,7 @@
 {
   "name": "nuxt-vite-plugin-webfont-dl",
   "type": "module",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A nuxt module to automatically install and configure the vite-plugin-webfont-dl vite plugin.",
   "author": "kiki-kanri",
   "license": "MIT",
@@ -76,7 +76,8 @@
     "rollup": "^4.55.2",
     "ts-unused-exports": "^11.0.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.17",
+    "vue-tsc": "^3.2.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
